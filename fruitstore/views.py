@@ -9,6 +9,20 @@ from .models import FruitStore
 from .serializers import FruitStoreSerializer
 
 
+#client(ui) -> server(data management)
+#아래 일을 왜 서버한테 시켜야할까요? (서버는 24시간 켜져잇기 때문애)
+#(봇)특정 데이터를 감시하시면서, 변경이 일어났거나, 특정 조건에서, 무슨 처리를 해줘.
+
+#보통의상황
+#클라이언트(ui, flutter)에서 데이터 저장소를 뭘 쓰고 있을까요? 서버 저장소.(db.sqlite3)
+#서버는 데이터 저장소를 뭘 쓰고 있을까요? 서버 저장소 (db.sqlite3)
+
+#현상황
+#클라이언트(ui, flutter)에서 데이터 저장소를 뭘 쓰고 있을까요? firestore
+#서버는 데이터 저장소를 뭘 쓰고 있을까요? 서버 저장소, firestore 연동
+
+
+
 class FruitStoreCreateView(APIView):
     @csrf_exempt
     def post(self, request):
@@ -32,6 +46,18 @@ class FruitStoreDetailView(APIView):
 
         serializer = FruitStoreSerializer(user)
         return Response(serializer.data)
+
+#crud. create, read, update, delete
+#post(create), put(update), delete(delete), get(read)
+class FruitStoreFindPnView(APIView):
+    @csrf_exempt
+    def get(self, request, phoneNumber):
+        try:
+            fruitstore = FruitStore.objects.get(phoneNumber = phoneNumber)
+            serializer = FruitStoreSerializer(fruitstore)
+            return Response(serializer.data)
+        except:
+            return Response('no match', status=400)
 
 class FruitStoreUpdateView(APIView):
     @csrf_exempt
