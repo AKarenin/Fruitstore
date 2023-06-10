@@ -39,6 +39,7 @@ class FruitStoreListView(APIView):
         serializer = FruitStoreSerializer(users, many=True)
         return Response(serializer.data)
 
+
 class FruitStoreDetailView(APIView):
     @csrf_exempt
     def get(self, request, pk):
@@ -46,6 +47,13 @@ class FruitStoreDetailView(APIView):
 
         serializer = FruitStoreSerializer(user)
         return Response(serializer.data)
+class FruitStoreFilterByLoc(APIView):
+    @csrf_exempt
+    def get(self, request, location):
+        fruitstores = FruitStore.objects.filter(location=location)
+        serializer = FruitStoreSerializer(fruitstores, many=True)
+        return Response(serializer.data)
+
 
 #crud. create, read, update, delete
 #post(create), put(update), delete(delete), get(read)
