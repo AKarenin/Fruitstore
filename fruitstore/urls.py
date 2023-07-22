@@ -4,7 +4,7 @@ from fruitstore.views import FruitStoreCreateView, FruitStoreListView, FruitStor
     FruitStoreDeleteView, FruitStoreFindPnView, FruitStoreFilterByLoc, FruitStoreFilterByName
 
 urlpatterns = [
-    path('make/', FruitStoreCreateView.as_view()),
+    path('create/', FruitStoreCreateView.as_view()),
     path('<int:pk>/', FruitStoreDetailView.as_view()),
     path('<int:pk>/update', FruitStoreUpdateView.as_view()),
     path('<int:pk>/delete', FruitStoreDeleteView.as_view()),
